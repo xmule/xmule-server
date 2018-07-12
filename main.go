@@ -4,12 +4,17 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/dciangot/go-cache/charon"
+	"github.com/xmule/xmule-server/charon"
+	"github.com/xmule/xmule-server/homer"
+	"github.com/xmule/xmule-server/virgil"
 )
 
 func main() {
 
-	err := http.ListenAndServe(":9999", charon.Handler{})
-	fmt.Println(err)
+	http.HandleFunc("/charon", charon.ServeHTTP)
+	http.HandleFunc("/virgil", virgil.ServeHTTP)
+	http.HandleFunc("/homer", homer.ServeHTTP)
+
+	fmt.Println(http.ListenAndServe(":12345", nil))
 
 }
